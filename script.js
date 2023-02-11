@@ -4,7 +4,7 @@ const clearBtn = document.querySelector("[data-clear]")
 const backspaceBtn = document.querySelector("[data-backspace]")
 const equalsBtn = document.querySelector("[data-equals]")
 
-const calculation = document.querySelector("[data-calculation")
+const calculation = document.querySelector("[data-calculation]")
 
 let currentVal = ""
 let operator = null
