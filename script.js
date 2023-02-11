@@ -58,42 +58,39 @@ const selectOperatorKey = (op) => {
   
 }
 
-const calculate = () => {
-    let computation
+const calculate = (prev, curr) => {
+  let computation
 
-    const a = parseFloat(previousVal)
-    const b = parseFloat(currentVal)
+  if (isNaN(prev) || isNaN(curr)) return
 
-    if (isNaN(a) || isNaN(b)) return
+  switch (operator) {
+      case '+':
+          computation = prev + curr
+          break
+      case '-':
+          computation =  prev - curr
+          break
+      case '×':
+          computation = prev * curr
+          break
+      case '÷':
+          if (curr === 0) {
+              computation = "Can't divide by zero"
+              break
+          }
+          computation = prev / curr
+          break
+      case '^':
+          computation = prev ** curr
+          break
+          default:
+              return
+  }
 
-    switch (operator) {
-        case '+':
-            computation = a + b
-            break
-        case '-':
-            computation =  a - b
-            break
-        case '×':
-            computation = a * b
-            break
-        case '÷':
-            if (b === 0) {
-                computation = "Can't divide by zero"
-                break
-            }
-            computation = a / b
-            break
-        case '^':
-            computation = a ** b
-            break
-            default:
-                return
-    }
-
-    currentVal = computation
-    operator = null
-    previousVal = ''
-    calculation.innerText = currentVal
+  currentVal = computation
+  operator = null
+  previousVal = ''
+  calculation.innerText = currentVal
 }
 
 clearBtn.addEventListener("click", () => clear())
@@ -101,17 +98,19 @@ clearBtn.addEventListener("click", () => clear())
 backspaceBtn.addEventListener("click", () => backspace())
 
 numberBtns.forEach(button => {
-  button.addEventListener("click", () => {
-    appendNum(button.innerText)
-  })
+button.addEventListener("click", () => {
+  appendNum(button.innerText)
+})
 })
 
 operatorBtns.forEach(button => {
-  button.addEventListener("click", () => {
-    selectOperatorKey(button.innerText)
-  })
+button.addEventListener("click", () => {
+  selectOperatorKey(button.innerText)
+})
 })
 
-equalsBtn.addEventListener("click", () => calculate())
+equalsBtn.addEventListener("click", () => {
+  calculate(parseFloat(previousVal), parseFloat(currentVal))
+})
 
 
